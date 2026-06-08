@@ -573,5 +573,30 @@
     events.addEventListener("products-updated", loadProducts);
     loadProducts();
 </script>
+
+<script>
+document.querySelectorAll(".comprar-ahora").forEach((boton) => {
+    boton.addEventListener("click", () => {
+        const card = boton.closest(".product-card");
+
+        const producto = card.dataset.productName || card.querySelector(".product-title")?.textContent || "Producto";
+        const precio = card.dataset.productPrice || card.querySelector(".product-price")?.textContent.trim() || "Consultar";
+
+        const mensaje = `🔥 *Nuevo pedido Fire Cheat* 🔥
+
+📦 *Producto:* ${producto}
+💰 *Precio:* ${precio}
+
+Hola, quiero comprar este producto.
+Por favor, envíame más información.`;
+
+        const url = `https://wa.me/18494355598?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, "_blank");
+    });
+});
+</script>
+
+
+
 </body>
 </html>

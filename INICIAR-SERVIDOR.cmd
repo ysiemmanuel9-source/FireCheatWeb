@@ -10,8 +10,8 @@ if errorlevel 1 (
   exit /b 1
 )
 echo.
-echo Pagina: http://localhost:3001
-echo Panel:  http://localhost:3001/admin.html
+echo Pagina: https://firecheat.up.railway.app
+echo Panel:  https://firecheat.up.railway.app/admin.html
 cmd /c npm start
 pause
 endlocal

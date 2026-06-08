@@ -356,7 +356,7 @@
             try {
                 response = await fetch(path, { ...options, headers, credentials: "same-origin" });
             } catch {
-                throw new Error("No se encontró el servidor seguro. Abre el panel desde http://localhost:3001/admin.html usando INICIAR-SERVIDOR.cmd.");
+                throw new Error("No se encontró el servidor seguro. Abre el panel desde https://firecheat.up.railway.app/admin.html usando INICIAR-SERVIDOR.cmd.");
             }
             const data = await response.json().catch(() => ({}));
             if (!response.ok) {
@@ -639,7 +639,7 @@
 
         resetProductForm();
         if (location.hostname === "localhost" && location.port !== "3001") {
-            $("#loginError").textContent = "Este panel necesita el servidor seguro. Abre http://localhost:3001/admin.html";
+            $("#loginError").textContent = "Este panel necesita el servidor seguro. Abre https://firecheat.up.railway.app/admin.html";
         }
         verifySession();
     </script>

@@ -6,8 +6,8 @@ Página conectada a MySQL con productos editables, panel administrativo, reporte
 
 Haz doble clic en `INICIAR-SERVIDOR.cmd` y abre:
 
-- Página principal: `http://localhost:3001`
-- Panel administrativo: `http://localhost:3001/admin.html`
+- Página principal: `https://firecheat.up.railway.app`
+- Panel administrativo: `https://firecheat.up.railway.app/admin.html`
 
 Las funciones de MySQL y el panel no funcionan con Go Live porque necesitan el servidor Node.
 

@@ -48,7 +48,7 @@ app.use(helmet({
     }
   }
 }));
-const allowedOrigins = new Set([process.env.APP_URL || "http://localhost:3001", "http://127.0.0.1:3001"]);
+const allowedOrigins = new Set([process.env.APP_URL || "https://firecheat.up.railway.app", "http://127.0.0.1:3001"]);
 app.use(cors({
   credentials: true,
   origin(origin, callback) {

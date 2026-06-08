@@ -527,62 +527,8 @@
         }
     }
 
-    async function openDiscord(source, productId = null) {
-        const popup = window.open("about:blank", "_blank");
-        try {
-            if (productId) {
-                const sale = await postJson("/api/sales/lead", { productId, sessionId });
-                discordInvite = sale.discordInvite || discordInvite;
-            }
-            const tracked = await postJson("/api/track/discord-click", { source, sessionId });
-            discordInvite = tracked.discordInvite || discordInvite;
-        } catch {
-            // El enlace sigue funcionando aunque el backend esté temporalmente fuera de servicio.
-        }
-        if (popup) popup.location.href = discordInvite;
-        else window.location.href = discordInvite;
-    }
-
-    document.getElementById("productsGrid").addEventListener("click", (event) => {
-        const button = event.target.closest(".comprar-ahora");
-        if (!button) return;
-        const card = button.closest(".product-card");
-        showToast(`Compra iniciada: ${card.querySelector(".product-title").innerText}`);
-        openDiscord("comprar-producto", Number(card.dataset.productId));
-    });
-
-    document.getElementById("fakeLoginBtn").addEventListener("click", (event) => {
-        event.preventDefault();
-        showToast("Abriendo acceso en Discord...");
-        openDiscord("boton-acceder");
-    });
-
-    document.querySelectorAll(".discord-tracked").forEach((link) => link.addEventListener("click", (event) => {
-        event.preventDefault();
-        openDiscord(link.dataset.source || "enlace-discord");
-    }));
-
-    fetch("/api/settings").then((response) => response.json()).then((settings) => {
-        discordInvite = settings.discordInvite || discordInvite;
-    }).catch(() => {});
-
-    postJson("/api/track/pageview", { sessionId }).catch(() => {});
-    setInterval(() => postJson("/api/track/heartbeat", { sessionId }).catch(() => {}), 15000);
-
-    const events = new EventSource("/api/events");
-    events.addEventListener("products-updated", loadProducts);
-    loadProducts();
-</script>
-
-<script>
-document.querySelectorAll(".comprar-ahora").forEach((boton) => {
-    boton.addEventListener("click", () => {
-        const card = boton.closest(".product-card");
-
-        const producto = card.dataset.productName || card.querySelector(".product-title")?.textContent || "Producto";
-        const precio = card.dataset.productPrice || card.querySelector(".product-price")?.textContent.trim() || "Consultar";
-
-        const mensaje = `🔥 *Nuevo pedido Fire Cheat* 🔥
+   function abrirWhatsApp(producto, precio) {
+    const mensaje = `🔥 *Nuevo pedido Fire Cheat* 🔥
 
 📦 *Producto:* ${producto}
 💰 *Precio:* ${precio}
@@ -590,13 +536,48 @@ document.querySelectorAll(".comprar-ahora").forEach((boton) => {
 Hola, quiero comprar este producto.
 Por favor, envíame más información.`;
 
-        const url = `https://wa.me/18494355598?text=${encodeURIComponent(mensaje)}`;
-        window.open(url, "_blank");
-    });
+    const url = `https://wa.me/18494355598?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
+}
+
+document.getElementById("productsGrid").addEventListener("click", (event) => {
+    const button = event.target.closest(".comprar-ahora");
+    if (!button) return;
+
+    const card = button.closest(".product-card");
+
+    const producto =
+        card.dataset.productName ||
+        card.querySelector(".product-title")?.innerText ||
+        "Producto";
+
+    const precio =
+        card.dataset.productPrice ||
+        card.querySelector(".product-price")?.innerText.trim() ||
+        "Consultar";
+
+    showToast(`Abriendo WhatsApp: ${producto}`);
+    abrirWhatsApp(producto, precio);
 });
+
+document.getElementById("fakeLoginBtn").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    window.open(
+        "https://wa.me/18494355598?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20Fire%20Cheat.",
+        "_blank"
+    );
+});
+
+postJson("/api/track/pageview", { sessionId }).catch(() => {});
+setInterval(
+    () => postJson("/api/track/heartbeat", { sessionId }).catch(() => {}),
+    15000
+);
+
+const events = new EventSource("/api/events");
+events.addEventListener("products-updated", loadProducts);
+loadProducts();
 </script>
-
-
-
 </body>
 </html>

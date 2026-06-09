@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin | Fire Cheat</title>
-    <link rel="icon" type="image/jpeg" href="assets/logo-fire-cheat.jpeg">
+    <title>Panel Admin | Sxnsi Blassed</title>
+    <link rel="icon" type="image/png" href="assets/sxnsi-blassed-logo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050507;
-            --panel: rgba(18, 18, 24, 0.86);
-            --panel-strong: #101015;
-            --red: #f63b3b;
-            --red-dark: #9f2027;
-            --purple: #6366f1;
-            --green: #10b981;
+            --bg: #02050d;
+            --panel: rgba(7, 15, 31, 0.88);
+            --panel-strong: #071022;
+            --red: #2784ff;
+            --red-dark: #1458b8;
+            --purple: #00d9ff;
+            --green: #00cfff;
             --yellow: #f59e0b;
             --text: #fff;
-            --muted: #9496a1;
-            --border: rgba(255, 255, 255, 0.09);
+            --muted: #9eacc5;
+            --border: rgba(91, 163, 255, 0.16);
             --radius: 18px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,8 +27,8 @@
             min-height: 100vh;
             color: var(--text);
             background:
-                radial-gradient(circle at 5% 10%, rgba(246,59,59,.2), transparent 32%),
-                radial-gradient(circle at 95% 90%, rgba(99,102,241,.18), transparent 35%),
+                radial-gradient(circle at 5% 10%, rgba(39,132,255,.2), transparent 32%),
+                radial-gradient(circle at 95% 90%, rgba(0,217,255,.14), transparent 35%),
                 var(--bg);
             font-family: "Plus Jakarta Sans", sans-serif;
         }
@@ -42,12 +42,12 @@
             padding: 38px;
             border: 1px solid var(--border);
             border-radius: 26px;
-            background: rgba(9,9,13,.88);
+            background: rgba(3,8,18,.92);
             backdrop-filter: blur(18px);
             box-shadow: 0 30px 80px rgba(0,0,0,.55);
         }
         .login-brand { text-align: center; margin-bottom: 30px; }
-        .login-brand img { width: 82px; height: 82px; object-fit: cover; border-radius: 20px; border: 1px solid rgba(246,59,59,.45); box-shadow: 0 0 30px rgba(246,59,59,.22); }
+        .login-brand img { width: 150px; height: 82px; padding: 5px; object-fit: contain; border-radius: 20px; border: 1px solid rgba(39,132,255,.45); background: #01030a; box-shadow: 0 0 34px rgba(39,132,255,.22); }
         .login-brand h1 { font-family: Outfit, sans-serif; font-size: 2rem; margin-top: 16px; }
         .login-brand p { color: var(--muted); margin-top: 6px; }
         .field { display: grid; gap: 8px; margin-bottom: 16px; }
@@ -63,42 +63,42 @@
             transition: .2s;
         }
         .field textarea { min-height: 105px; resize: vertical; }
-        .field input:focus, .field textarea:focus, .field select:focus { border-color: rgba(246,59,59,.7); box-shadow: 0 0 0 3px rgba(246,59,59,.12); }
-        .field select option { background: #121218; }
+        .field input:focus, .field textarea:focus, .field select:focus { border-color: rgba(0,217,255,.7); box-shadow: 0 0 0 3px rgba(39,132,255,.15); }
+        .field select option { background: #071022; }
         .primary-btn, .secondary-btn, .danger-btn, .icon-btn {
             border-radius: 11px;
             color: white;
             font-weight: 700;
             transition: .2s;
         }
-        .primary-btn { background: var(--red); padding: 12px 18px; }
-        .primary-btn:hover { background: #ff4b4b; transform: translateY(-1px); }
+        .primary-btn { background: linear-gradient(135deg, var(--red), var(--purple)); padding: 12px 18px; box-shadow: 0 0 22px rgba(39,132,255,.17); }
+        .primary-btn:hover { filter: brightness(1.12); transform: translateY(-1px); box-shadow: 0 0 28px rgba(39,132,255,.27); }
         .secondary-btn { background: rgba(255,255,255,.06); border: 1px solid var(--border); padding: 11px 16px; }
-        .danger-btn { background: rgba(246,59,59,.14); border: 1px solid rgba(246,59,59,.35); padding: 9px 12px; }
+        .danger-btn { background: rgba(39,132,255,.12); border: 1px solid rgba(39,132,255,.35); padding: 9px 12px; }
         .icon-btn { width: 38px; height: 38px; background: rgba(255,255,255,.06); border: 1px solid var(--border); }
         .wide { width: 100%; }
-        .login-error { min-height: 22px; margin-top: 12px; color: #ff7b82; font-size: .88rem; text-align: center; }
+        .login-error { min-height: 22px; margin-top: 12px; color: #74b8ff; font-size: .88rem; text-align: center; }
         .topbar {
             position: sticky; top: 0; z-index: 30;
             height: 72px;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 28px;
-            background: rgba(5,5,7,.9);
+            background: rgba(2,5,13,.92);
             border-bottom: 1px solid var(--border);
             backdrop-filter: blur(16px);
         }
         .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; }
-        .brand img { width: 44px; height: 44px; object-fit: cover; border-radius: 11px; }
+        .brand img { width: 84px; height: 44px; padding: 4px; object-fit: contain; border-radius: 11px; border: 1px solid rgba(39,132,255,.28); background: #01030a; }
         .top-actions { display: flex; align-items: center; gap: 10px; }
         .admin-layout { display: grid; grid-template-columns: 230px minmax(0,1fr); min-height: calc(100vh - 72px); }
-        .sidebar { border-right: 1px solid var(--border); background: rgba(7,7,10,.7); padding: 24px 16px; }
+        .sidebar { border-right: 1px solid var(--border); background: rgba(3,8,18,.78); padding: 24px 16px; }
         .sidebar small { color: var(--muted); display: block; margin: 0 12px 12px; }
         .tab-btn {
             width: 100%; display: flex; align-items: center; gap: 12px;
             background: transparent; color: var(--muted);
             padding: 12px; border-radius: 11px; text-align: left; margin-bottom: 6px;
         }
-        .tab-btn.active, .tab-btn:hover { background: rgba(246,59,59,.11); color: white; }
+        .tab-btn.active, .tab-btn:hover { background: linear-gradient(90deg, rgba(39,132,255,.18), rgba(0,217,255,.06)); color: white; }
         .content { padding: 30px; min-width: 0; }
         .page-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 24px; }
         .page-head h2 { font: 800 2rem Outfit, sans-serif; }
@@ -127,8 +127,8 @@
         .visit-bars { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(14, minmax(13px, 1fr)); align-items: end; gap: clamp(4px, 1vw, 11px); height: 185px; }
         .visit-bar { min-width: 0; height: 100%; display: grid; grid-template-rows: 1fr auto; gap: 8px; text-align: center; color: #777985; font-size: .64rem; }
         .bar-track { height: 100%; display: flex; align-items: end; justify-content: center; border-radius: 7px; }
-        .bar-fill { position: relative; width: min(100%, 20px); min-height: 3px; height: var(--height); background: linear-gradient(180deg, #ff5259, #c92832); border: 1px solid rgba(255,112,117,.22); border-radius: 5px 5px 2px 2px; box-shadow: 0 5px 16px rgba(246,59,59,.12); transition: .2s; }
-        .bar-fill:hover { background: #ff5259; box-shadow: 0 0 18px rgba(246,59,59,.34); }
+        .bar-fill { position: relative; width: min(100%, 20px); min-height: 3px; height: var(--height); background: linear-gradient(180deg, #00d9ff, #2784ff); border: 1px solid rgba(94,204,255,.32); border-radius: 5px 5px 2px 2px; box-shadow: 0 5px 16px rgba(39,132,255,.16); transition: .2s; }
+        .bar-fill:hover { background: #00d9ff; box-shadow: 0 0 20px rgba(39,132,255,.42); }
         .bar-fill strong { position: absolute; left: 50%; top: -19px; transform: translateX(-50%); color: #c7c8cf; font-size: .66rem; font-weight: 600; opacity: 0; transition: .15s; }
         .bar-fill.has-value strong, .bar-fill:hover strong { opacity: 1; }
         .visit-label.today { color: white; font-weight: 700; }
@@ -140,7 +140,7 @@
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .field.full { grid-column: 1 / -1; }
         .check-row { display: flex; align-items: center; gap: 9px; margin: 2px 0 18px; color: #d8d8df; }
-        .check-row input { accent-color: var(--red); width: 17px; height: 17px; }
+        .check-row input { accent-color: var(--purple); width: 17px; height: 17px; }
         .form-actions { display: flex; gap: 10px; }
         .image-preview { width: 100%; height: 150px; object-fit: cover; border: 1px dashed rgba(255,255,255,.18); border-radius: 12px; background: #09090d; margin-bottom: 14px; }
         .products-list { display: grid; gap: 12px; }
@@ -153,7 +153,7 @@
         .product-meta { color: var(--muted); font-size: .82rem; }
         .product-actions { display: flex; gap: 8px; }
         .status-pill { display: inline-flex; padding: 3px 8px; border-radius: 30px; font-size: .72rem; margin-left: 6px; background: rgba(16,185,129,.15); color: #64e2b7; }
-        .status-pill.off { background: rgba(246,59,59,.13); color: #ff8990; }
+        .status-pill.off { background: rgba(39,132,255,.13); color: #7fc2ff; }
         .table-wrap { overflow: auto; }
         table { width: 100%; border-collapse: collapse; min-width: 760px; }
         th, td { padding: 13px 12px; border-bottom: 1px solid var(--border); text-align: left; font-size: .85rem; }
@@ -167,7 +167,7 @@
             transform: translateY(20px); opacity: 0; pointer-events: none; transition: .25s;
         }
         .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.error { border-color: rgba(246,59,59,.5); }
+        .toast.error { border-color: rgba(39,132,255,.5); }
         @media (max-width: 1100px) {
             .metrics { grid-template-columns: repeat(2, minmax(0,1fr)); }
             .dashboard-grid, .products-layout { grid-template-columns: 1fr; }
@@ -196,9 +196,9 @@
     <section class="login-shell" id="loginView">
         <form class="login-card" id="loginForm">
             <div class="login-brand">
-                <img src="assets/logo-fire-cheat.jpeg" alt="Logo Fire Cheat">
+                <img src="assets/sxnsi-blassed-logo.png" alt="Logo Sxnsi Blassed">
                 <h1>Panel Admin</h1>
-                <p>Control privado de Fire Cheat</p>
+                <p>Control privado de Sxnsi Blassed</p>
             </div>
             <div class="field">
                 <label for="loginUser">Usuario</label>
@@ -217,8 +217,8 @@
     <section class="hidden" id="adminView">
         <header class="topbar">
             <a class="brand" href="index.html">
-                <img src="assets/logo-fire-cheat.jpeg" alt="Fire Cheat">
-                <span>Fire Cheat Admin</span>
+                <img src="assets/sxnsi-blassed-logo.png" alt="Sxnsi Blassed">
+                <span>Sxnsi Blassed Admin</span>
             </a>
             <div class="top-actions">
                 <a class="secondary-btn" href="index.html" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> <span>Ver página</span></a>
@@ -278,7 +278,7 @@
                     <div class="products-layout">
                         <form class="panel" id="productForm">
                             <div class="panel-title"><h3 id="productFormTitle">Agregar producto</h3><button class="icon-btn hidden" type="button" id="cancelEditBtn" title="Cancelar edición"><i class="fas fa-xmark"></i></button></div>
-                            <img class="image-preview" id="imagePreview" src="assets/logo-fire-cheat.jpeg" alt="Vista previa">
+                            <img class="image-preview" id="imagePreview" src="assets/sxnsi-blassed-logo.png" alt="Vista previa">
                             <input type="hidden" id="productId">
                             <div class="field">
                                 <label for="productImage">Foto por URL</label>
@@ -446,7 +446,7 @@
                 $("#productCount").textContent = `${state.products.length} productos`;
                 $("#productsList").innerHTML = state.products.length ? state.products.map((product) => `
                     <div class="admin-product">
-                        <img src="${escapeHtml(product.imageUrl || "assets/logo-fire-cheat.jpeg")}" alt="">
+                        <img src="${escapeHtml(product.imageUrl || "assets/sxnsi-blassed-logo.png")}" alt="">
                         <div>
                             <h4>${escapeHtml(product.name)} <span class="status-pill ${product.active ? "" : "off"}">${product.active ? "Visible" : "Oculto"}</span></h4>
                             <div class="product-meta">${escapeHtml(product.category)} · ${money(product.price)} · Orden ${product.sortOrder}</div>
@@ -468,7 +468,7 @@
             $("#productActive").checked = true;
             $("#productCategory").value = "scripts";
             $("#productOrder").value = state.products.length;
-            $("#imagePreview").src = "assets/logo-fire-cheat.jpeg";
+            $("#imagePreview").src = "assets/sxnsi-blassed-logo.png";
             state.editingImage = "";
             $("#productFormTitle").textContent = "Agregar producto";
             $("#cancelEditBtn").classList.add("hidden");
@@ -488,7 +488,7 @@
             $("#productActive").checked = product.active;
             $("#productImage").value = product.imageUrl?.startsWith("data:") ? "" : product.imageUrl || "";
             state.editingImage = product.imageUrl || "";
-            $("#imagePreview").src = product.imageUrl || "assets/logo-fire-cheat.jpeg";
+            $("#imagePreview").src = product.imageUrl || "assets/sxnsi-blassed-logo.png";
             $("#productFormTitle").textContent = "Editar producto";
             $("#cancelEditBtn").classList.remove("hidden");
             window.scrollTo({ top: 0, behavior: "smooth" });
@@ -553,7 +553,7 @@
         $("#productForm").addEventListener("submit", async (event) => {
             event.preventDefault();
             const id = $("#productId").value;
-            const imageUrl = state.editingImage || $("#productImage").value.trim() || "assets/logo-fire-cheat.jpeg";
+            const imageUrl = state.editingImage || $("#productImage").value.trim() || "assets/sxnsi-blassed-logo.png";
             const product = {
                 name: $("#productName").value,
                 category: $("#productCategory").value,

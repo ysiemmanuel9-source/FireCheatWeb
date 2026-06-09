@@ -1,4 +1,4 @@
-# Fire Cheat Web
+# Sxnsi Blassed Web
 
 Página conectada a MySQL con productos editables, panel administrativo, reportes y actualización automática.
 

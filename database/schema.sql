@@ -53,6 +53,6 @@ CREATE TABLE IF NOT EXISTS settings (
 );
 
 INSERT INTO settings (setting_key, setting_value) VALUES
-  ('discordInvite', 'https://discord.gg/GGjnGgrg'),
-  ('storeName', 'Fire Cheat')
+  ('discordInvite', 'https://discord.gg/nszkHtaWJE'),
+  ('storeName', 'Sxnsi Blassed')
 ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value);

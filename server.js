@@ -15,6 +15,9 @@ const HOST = process.env.HOST || "0.0.0.0";
 const JWT_SECRET = process.env.JWT_SECRET || "fire_cheat_dev_secret";
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const SESSION_COOKIE = "fire_cheat_admin";
+const BRAND_NAME = "Sxnsi Blassed";
+const BRAND_LOGO = "assets/sxnsi-blassed-logo.png";
+const DISCORD_INVITE = "https://discord.gg/nszkHtaWJE";
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
@@ -160,12 +163,12 @@ function cleanLimited(value, fallback, limit) {
 }
 
 function cleanImageUrl(value) {
-  const imageUrl = cleanLimited(value, "assets/logo-fire-cheat.jpeg", 900000);
-  if (!imageUrl) return "assets/logo-fire-cheat.jpeg";
+  const imageUrl = cleanLimited(value, BRAND_LOGO, 900000);
+  if (!imageUrl) return BRAND_LOGO;
   if (imageUrl.startsWith("data:image/")) return imageUrl;
   if (imageUrl.startsWith("assets/")) return imageUrl;
   if (/^https?:\/\/[^\s]+$/i.test(imageUrl)) return imageUrl;
-  return "assets/logo-fire-cheat.jpeg";
+  return BRAND_LOGO;
 }
 
 function cleanProduct(body) {
@@ -240,16 +243,38 @@ async function syncConfiguredAdmin() {
   const rows = await query("SELECT id FROM users WHERE username = :username LIMIT 1", { username });
   if (rows.length) {
     await query(
-      "UPDATE users SET role = 'admin', password_hash = :passwordHash, name = 'Administrador Fire Cheat', active = 1 WHERE id = :id",
-      { passwordHash, id: rows[0].id }
+      "UPDATE users SET role = 'admin', password_hash = :passwordHash, name = :name, active = 1 WHERE id = :id",
+      { passwordHash, name: `Administrador ${BRAND_NAME}`, id: rows[0].id }
     );
   } else {
     await query(
-      "INSERT INTO users (role, username, password_hash, name, active) VALUES ('admin', :username, :passwordHash, 'Administrador Fire Cheat', 1)",
-      { username, passwordHash }
+      "INSERT INTO users (role, username, password_hash, name, active) VALUES ('admin', :username, :passwordHash, :name, 1)",
+      { username, passwordHash, name: `Administrador ${BRAND_NAME}` }
     );
   }
   await query("UPDATE users SET active = 0 WHERE role = 'admin' AND username <> :username", { username });
+}
+
+async function syncBrandDefaults() {
+  await query(
+    `INSERT INTO settings (setting_key, setting_value) VALUES
+      ('discordInvite', :discordInvite),
+      ('storeName', :storeName)
+     ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)`,
+    { discordInvite: DISCORD_INVITE, storeName: BRAND_NAME }
+  );
+  await query(
+    `UPDATE products
+     SET name = REPLACE(name, 'Fire Cheat', :brandName),
+         description = REPLACE(description, 'Fire Cheat', :brandName),
+         image_url = CASE
+           WHEN name = 'PANEL IOS / FLOURITE' THEN 'assets/panel-fluorite-blue.jpg'
+           WHEN image_url = 'assets/logo-fire-cheat.jpeg' THEN :brandLogo
+           WHEN image_url = 'assets/panel-fluorite-red-final.jpg' THEN 'assets/panel-fluorite-blue.jpg'
+           ELSE image_url
+         END`,
+    { brandName: BRAND_NAME, brandLogo: BRAND_LOGO }
+  );
 }
 
 async function seedProducts() {
@@ -258,10 +283,10 @@ async function seedProducts() {
 
   const products = [
     {
-      name: "Fire Cheat | RANK PANEL COMPLEX",
+      name: `${BRAND_NAME} | RANK PANEL COMPLEX`,
       category: "scripts",
       description: "Panel complejo para Free Fire, funciones avanzadas.",
-      imageUrl: "assets/logo-fire-cheat.jpeg",
+      imageUrl: BRAND_LOGO,
       oldPrice: 5,
       price: 3.75,
       badge: "scripts"
@@ -270,7 +295,7 @@ async function seedProducts() {
       name: "PANEL IOS / FLOURITE",
       category: "scripts",
       description: "Panel exclusivo para iOS, estabilidad garantizada.",
-      imageUrl: "assets/logo-fire-cheat.jpeg",
+      imageUrl: "assets/panel-fluorite-blue.jpg",
       oldPrice: 5,
       price: 3.75,
       badge: "scripts"
@@ -279,7 +304,7 @@ async function seedProducts() {
       name: "Baypas Apk",
       category: "bypass",
       description: "Bypass actualizado, anti-deteccion y compatibilidad.",
-      imageUrl: "assets/logo-fire-cheat.jpeg",
+      imageUrl: BRAND_LOGO,
       oldPrice: 6,
       price: 4.5,
       badge: "bypass"
@@ -287,8 +312,8 @@ async function seedProducts() {
     {
       name: "DripClient Update - Att",
       category: "scripts",
-      description: "Fire Cheat.",
-      imageUrl: "assets/logo-fire-cheat.jpeg",
+      description: `${BRAND_NAME}.`,
+      imageUrl: BRAND_LOGO,
       oldPrice: null,
       price: 4.99,
       badge: "nuevo"
@@ -337,8 +362,8 @@ app.get("/api/me", auth, adminOnly, async (req, res) => {
 
 app.get("/api/settings", async (_req, res) => {
   res.json({
-    discordInvite: await getSetting("discordInvite", "https://discord.gg/GGjnGgrg"),
-    storeName: await getSetting("storeName", "Fire Cheat")
+    discordInvite: await getSetting("discordInvite", DISCORD_INVITE),
+    storeName: await getSetting("storeName", BRAND_NAME)
   });
 });
 
@@ -376,7 +401,7 @@ app.post("/api/track/discord-click", async (req, res) => {
     source: cleanText(req.body.source, "pagina-principal")
   });
   broadcast("reports-updated", {});
-  res.json({ ok: true, discordInvite: await getSetting("discordInvite", "https://discord.gg/GGjnGgrg") });
+  res.json({ ok: true, discordInvite: await getSetting("discordInvite", DISCORD_INVITE) });
 });
 
 app.post("/api/sales/lead", async (req, res) => {
@@ -400,10 +425,16 @@ app.post("/api/sales/lead", async (req, res) => {
     productId: product.id,
     metadata: { saleId: result.insertId, productName: product.name }
   });
+  await logEvent("discord_click", {
+    sessionId: req.body.sessionId,
+    source: "compra-producto",
+    productId: product.id,
+    metadata: { saleId: result.insertId, productName: product.name }
+  });
   broadcast("reports-updated", {});
   res.status(201).json({
     id: result.insertId,
-    discordInvite: await getSetting("discordInvite", "https://discord.gg/GGjnGgrg")
+    discordInvite: await getSetting("discordInvite", DISCORD_INVITE)
   });
 });
 
@@ -513,13 +544,14 @@ app.use((error, _req, res, _next) => {
 async function start() {
   await pool.query("SELECT 1");
   await syncConfiguredAdmin();
+  await syncBrandDefaults();
   await seedProducts();
   setInterval(() => {
     activeVisitorCount();
     broadcast("active-visitors", { activeVisitors: activeVisitorCount() });
   }, 15000).unref();
   app.listen(PORT, HOST, () => {
-    console.log(`Fire Cheat corriendo en http://localhost:${PORT}`);
+    console.log(`${BRAND_NAME} corriendo en http://localhost:${PORT}`);
     console.log(`Panel admin: http://localhost:${PORT}/admin.html`);
   });
 }

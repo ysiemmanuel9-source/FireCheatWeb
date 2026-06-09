@@ -1,7 +1,7 @@
 {
   "name": "fire-cheat-web",
   "version": "1.0.0",
-  "description": "Pagina Fire Cheat con panel admin, MySQL y reportes",
+  "description": "Pagina Sxnsi Blassed con panel admin, MySQL y reportes",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
